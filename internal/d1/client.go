@@ -2,6 +2,7 @@ package d1
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -12,6 +13,7 @@ const (
 
 type Client struct {
 	httpClient *http.Client
+	debug      *log.Logger
 	baseURL    *url.URL
 	accountId  string
 	apiToken   string
@@ -42,4 +44,12 @@ func NewClient(httpClient *http.Client, accountId, apiToken, location string) (*
 		apiToken:   apiToken,
 		location:   location,
 	}, nil
+}
+
+func (c *Client) SetLogger(l *log.Logger) {
+	if l == nil {
+		return
+	}
+
+	c.debug = l
 }

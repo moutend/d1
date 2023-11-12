@@ -51,6 +51,9 @@ func rootCommandPersistentPreRunE(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+	if debug, _ := cmd.Flags().GetBool("debug"); debug {
+		d1Client.SetLogger(log.New(cmd.OutOrStdout(), "debug: ", 0))
+	}
 
 	ctx := cmd.Context()
 	ctx = context.WithValue(ctx, constant.D1ClientContextKey, d1Client)
